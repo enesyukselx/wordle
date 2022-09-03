@@ -1,0 +1,29 @@
+.Key {
+    background-color: var(--key-bg);
+    display: inline-block;
+    padding: 1.4rem 1.3rem;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: var(--key-text-color);
+    border: 0;
+    outline: 0;
+    font-size: 1.4rem;
+    cursor: pointer;
+    margin-right: 0.5rem;
+}
+
+.Key.Correct {
+    background-color: var(--key-bg-correct);
+    color: var(--key-evaluated-text-color);
+}
+
+.Key.Wrong {
+    background-color: var(--key-bg-absent);
+    color: var(--key-evaluated-text-color);
+}
+
+.Key.Present {
+    background-color: var(--key-bg-present);
+    color: var(--key-evaluated-text-color);
+}

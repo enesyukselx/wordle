@@ -1,0 +1,9 @@
+.Keyboard {
+    width: 100%;
+    margin: 30px auto;
+}
+
+.Row {
+    margin: 1rem;
+    text-align: center;
+}
