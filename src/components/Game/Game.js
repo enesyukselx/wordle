@@ -1,22 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import classes from "./Game.module.css";
 import Tile from "./Tile";
 
 const Game = () => {
-    const DUMMY_ANSWER = "KİRPİ";
+    const DUMMY_ANSWER = "kirpi";
 
-    const [row1, setRow1] = useState(["K", "A", "L", "E", "M"]);
-    const [row2, setRow2] = useState(["K", "İ", "T", "A", "P"]);
-    const [row3, setRow3] = useState(["K", "A", "Ğ", "I", "T"]);
-    const [row4, setRow4] = useState(["K", "İ", "R", "E", "Ç"]);
-    const [row5, setRow5] = useState(["S", "A", "H", "İ", "P"]);
-    const [row6, setRow6] = useState(["K", "İ", "R", "P", "İ"]);
+    const [isEntered, setIsEntered] = useState(false);
+    const [tileCount, setTileCount] = useState(0);
+
+    const [row1, setRow1] = useState(["", "", "", "", ""]);
+    const [row2, setRow2] = useState(["", "", "", "", ""]);
+    const [row3, setRow3] = useState(["", "", "", "", ""]);
+    const [row4, setRow4] = useState(["", "", "", "", ""]);
+    const [row5, setRow5] = useState(["", "", "", "", ""]);
+    const [row6, setRow6] = useState(["", "", "", "", ""]);
+
+    useEffect(() => {
+        document.addEventListener("keydown", keyDownHandler);
+    }, []);
+
+    const keyDownHandler = (event) => {
+        setRow1((prevState) => {
+            const updatedRow = [...prevState];
+            updatedRow[tileCount] = event.key.toUpperCase();
+            return updatedRow;
+        });
+    };
 
     const wrong = (index, row) => {
         const answerLetter = DUMMY_ANSWER[index];
         const rowLetter = row[index];
-        if (answerLetter !== rowLetter) {
+        if (answerLetter.toUpperCase() !== rowLetter.toUpperCase()) {
             return true;
         }
     };
@@ -24,7 +39,7 @@ const Game = () => {
     const correct = (index, row) => {
         const answerLetter = DUMMY_ANSWER[index];
         const rowLetter = row[index];
-        if (answerLetter === rowLetter) {
+        if (answerLetter.toUpperCase() === rowLetter.toUpperCase()) {
             return true;
         }
     };
@@ -37,7 +52,7 @@ const Game = () => {
         }
 
         for (let letter of DUMMY_ANSWER) {
-            if (letter === row[index]) {
+            if (letter.toUpperCase() === row[index].toUpperCase()) {
                 present = true;
                 return present;
             }
