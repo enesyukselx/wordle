@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import useKeypress from "react-use-keypress";
 
 import classes from "./Game.module.css";
-import Tile from "./Tile";
 import Modal from "../UI/Modal";
 import Row from "./Row";
 
@@ -117,39 +116,6 @@ const Game = () => {
             setTileCount((prevTileCount) => prevTileCount + 1);
         }
     });
-
-    const wrong = (index, row) => {
-        const answerLetter = DUMMY_ANSWER[index];
-        const rowLetter = row[index];
-        if (answerLetter.toUpperCase() !== rowLetter.toUpperCase()) {
-            return true;
-        }
-    };
-
-    const correct = (index, row) => {
-        const answerLetter = DUMMY_ANSWER[index];
-        const rowLetter = row[index];
-        if (answerLetter.toUpperCase() === rowLetter.toUpperCase()) {
-            return true;
-        }
-    };
-
-    const present = (index, row) => {
-        let present = false;
-
-        if (correct(index, row)) {
-            return present;
-        }
-
-        for (let letter of DUMMY_ANSWER) {
-            if (letter.toUpperCase() === row[index].toUpperCase()) {
-                present = true;
-                return present;
-            }
-        }
-    };
-
-    const empty = (letter) => letter.trim() === "";
 
     const closeModalHandler = () => {
         setShowModal(false);
