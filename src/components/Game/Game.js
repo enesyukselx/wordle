@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import useKeypress from "react-use-keypress";
+import Context from "../../store/context";
 
 import classes from "./Game.module.css";
 import Modal from "../UI/Modal";
 import Row from "./Row";
 
 const Game = () => {
-    const DUMMY_ANSWER = "fener";
+    const ctx = useContext(Context);
 
     const [showModal, setShowModal] = useState(false);
     const [finished, setFinished] = useState(false);
@@ -55,16 +56,6 @@ const Game = () => {
     const [tileCount, setTileCount] = useState(0);
     const [rowCount, setRowCount] = useState(0);
 
-    const [row1, setRow1] = useState(["", "", "", "", ""]);
-    const [row2, setRow2] = useState(["", "", "", "", ""]);
-    const [row3, setRow3] = useState(["", "", "", "", ""]);
-    const [row4, setRow4] = useState(["", "", "", "", ""]);
-    const [row5, setRow5] = useState(["", "", "", "", ""]);
-    const [row6, setRow6] = useState(["", "", "", "", ""]);
-
-    const rows = [row1, row2, row3, row4, row5, row6];
-    const setRows = [setRow1, setRow2, setRow3, setRow4, setRow5, setRow6];
-
     useKeypress("Enter", () => {
         if (tileCount === 5 && rowCount !== 6 && !finished) {
             setRowCount(rowCount + 1);
@@ -82,7 +73,7 @@ const Game = () => {
                 setFinished(true);
             }
 
-            if (rows[rowCount].join("") === DUMMY_ANSWER) {
+            if (ctx.rows[rowCount].join("") === ctx.WORDLE_ANSWER) {
                 setTimeout(() => {
                     setShowModal(true);
                 }, 500);
@@ -92,14 +83,10 @@ const Game = () => {
         }
     });
 
-    useKeypress("Backspace", () => {
+    useKeypress("Backspace", (e) => {
         if (tileCount !== 0 && !finished && rowCount !== 6) {
             setTileCount((prevState) => prevState - 1);
-            setRows[rowCount]((prevState) => {
-                const updatedArr = [...prevState];
-                updatedArr[tileCount - 1] = "";
-                return updatedArr;
-            });
+            ctx.setRow(rowCount, tileCount, e.key, true);
         }
     });
 
@@ -108,11 +95,7 @@ const Game = () => {
             return;
         }
         if (!finished) {
-            setRows[rowCount]((prevRow1) => {
-                const newRow1 = [...prevRow1];
-                newRow1[tileCount] = e.key;
-                return newRow1;
-            });
+            ctx.setRow(rowCount, tileCount, e.key);
             setTileCount((prevTileCount) => prevTileCount + 1);
         }
     });
@@ -128,7 +111,7 @@ const Game = () => {
                     <h1>{isWin ? "Congrulations!!!!" : "Try Again :("}</h1>
                     <p className={classes.ModalParagraph}>
                         {!isWin &&
-                            "The answer is " + DUMMY_ANSWER.toUpperCase()}
+                            "The answer is " + ctx.WORDLE_ANSWER.toUpperCase()}
                         {isWin && (
                             <span>
                                 You found the answer in
@@ -138,7 +121,7 @@ const Game = () => {
                     </p>
                     <h3 className={classes.ModalTitle}>Your guesses</h3>
                     <ul className={classes.List}>
-                        {rows.map((row, index) => (
+                        {ctx.rows.map((row, index) => (
                             <li key={index}>{row.join("").toUpperCase()}</li>
                         ))}
                     </ul>
@@ -153,36 +136,14 @@ const Game = () => {
                 </Modal>
             )}
             <div className={classes.Game}>
-                <Row
-                    row={row1}
-                    answer={DUMMY_ANSWER}
-                    isEntered={isEntered[0]}
-                />
-                <Row
-                    row={row2}
-                    answer={DUMMY_ANSWER}
-                    isEntered={isEntered[1]}
-                />
-                <Row
-                    row={row3}
-                    answer={DUMMY_ANSWER}
-                    isEntered={isEntered[2]}
-                />
-                <Row
-                    row={row4}
-                    answer={DUMMY_ANSWER}
-                    isEntered={isEntered[3]}
-                />
-                <Row
-                    row={row5}
-                    answer={DUMMY_ANSWER}
-                    isEntered={isEntered[4]}
-                />
-                <Row
-                    row={row6}
-                    answer={DUMMY_ANSWER}
-                    isEntered={isEntered[5]}
-                />
+                {ctx.rows.map((row, index) => (
+                    <Row
+                        key={index}
+                        row={row}
+                        index={index}
+                        isEntered={isEntered[index]}
+                    />
+                ))}
             </div>
         </React.Fragment>
     );

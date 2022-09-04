@@ -1,9 +1,14 @@
+import { useContext } from "react";
+
+import Context from "../../store/context";
 import classes from "./Row.module.css";
 import Tile from "./Tile";
 
 const Row = (props) => {
+    const ctx = useContext(Context);
+
     const wrong = (index, row) => {
-        const answerLetter = props.answer[index];
+        const answerLetter = ctx.WORDLE_ANSWER[index];
         const rowLetter = row[index];
         if (answerLetter.toUpperCase() !== rowLetter.toUpperCase()) {
             return true;
@@ -11,7 +16,7 @@ const Row = (props) => {
     };
 
     const correct = (index, row) => {
-        const answerLetter = props.answer[index];
+        const answerLetter = ctx.WORDLE_ANSWER[index];
         const rowLetter = row[index];
         if (answerLetter.toUpperCase() === rowLetter.toUpperCase()) {
             return true;
@@ -25,7 +30,7 @@ const Row = (props) => {
             return present;
         }
 
-        for (let letter of props.answer) {
+        for (let letter of ctx.WORDLE_ANSWER) {
             if (letter.toUpperCase() === row[index].toUpperCase()) {
                 present = true;
                 return present;
