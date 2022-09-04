@@ -4,6 +4,7 @@ import useKeypress from "react-use-keypress";
 import classes from "./Game.module.css";
 import Tile from "./Tile";
 import Modal from "../UI/Modal";
+import Row from "./Row";
 
 const Game = () => {
     const DUMMY_ANSWER = "fener";
@@ -186,96 +187,36 @@ const Game = () => {
                 </Modal>
             )}
             <div className={classes.Game}>
-                <div className={classes.Row}>
-                    {row1.map((letter, index) => (
-                        <Tile
-                            key={index}
-                            letter={letter}
-                            {...(!empty(letter) &&
-                                isEntered[0] &&
-                                wrong(index, row1) && { wrong: true })}
-                            {...(isEntered[0] &&
-                                present(index, row1) && { present: true })}
-                            {...(isEntered[0] &&
-                                correct(index, row1) && { correct: true })}
-                        />
-                    ))}
-                </div>
-                <div className={classes.Row}>
-                    {row2.map((letter, index) => (
-                        <Tile
-                            key={index}
-                            letter={letter}
-                            {...(!empty(letter) &&
-                                isEntered[1] &&
-                                wrong(index, row2) && { wrong: true })}
-                            {...(isEntered[1] &&
-                                present(index, row2) && { present: true })}
-                            {...(isEntered[1] &&
-                                correct(index, row2) && { correct: true })}
-                        />
-                    ))}
-                </div>
-                <div className={classes.Row}>
-                    {row3.map((letter, index) => (
-                        <Tile
-                            key={index}
-                            letter={letter}
-                            {...(!empty(letter) &&
-                                isEntered[2] &&
-                                wrong(index, row3) && { wrong: true })}
-                            {...(isEntered[2] &&
-                                present(index, row3) && { present: true })}
-                            {...(isEntered[2] &&
-                                correct(index, row3) && { correct: true })}
-                        />
-                    ))}
-                </div>
-                <div className={classes.Row}>
-                    {row4.map((letter, index) => (
-                        <Tile
-                            key={index}
-                            letter={letter}
-                            {...(!empty(letter) &&
-                                isEntered[3] &&
-                                wrong(index, row4) && { wrong: true })}
-                            {...(isEntered[3] &&
-                                present(index, row4) && { present: true })}
-                            {...(isEntered[3] &&
-                                correct(index, row4) && { correct: true })}
-                        />
-                    ))}
-                </div>
-                <div className={classes.Row}>
-                    {row5.map((letter, index) => (
-                        <Tile
-                            key={index}
-                            letter={letter}
-                            {...(!empty(letter) &&
-                                isEntered[4] &&
-                                wrong(index, row5) && { wrong: true })}
-                            {...(isEntered[4] &&
-                                present(index, row5) && { present: true })}
-                            {...(isEntered[4] &&
-                                correct(index, row5) && { correct: true })}
-                        />
-                    ))}
-                </div>
-                <div className={classes.Row}>
-                    {row6.map((letter, index) => (
-                        <Tile
-                            key={index}
-                            letter={letter}
-                            {...(!empty(letter) &&
-                                isEntered[5] &&
-                                wrong(index, row6) && { wrong: true })}
-                            {...(isEntered[5] &&
-                                present(index, row6) && { present: true })}
-                            {...(isEntered[5] &&
-                                correct(index, row6) && { correct: true })}
-                        />
-                    ))}
-                </div>
+                <Row
+                    row={row1}
+                    answer={DUMMY_ANSWER}
+                    isEntered={isEntered[0]}
+                />
+                <Row
+                    row={row2}
+                    answer={DUMMY_ANSWER}
+                    isEntered={isEntered[1]}
+                />
+                <Row
+                    row={row3}
+                    answer={DUMMY_ANSWER}
+                    isEntered={isEntered[2]}
+                />
+                <Row
+                    row={row4}
+                    answer={DUMMY_ANSWER}
+                    isEntered={isEntered[3]}
+                />
+                <Row
+                    row={row5}
+                    answer={DUMMY_ANSWER}
+                    isEntered={isEntered[4]}
+                />
+                <Row
+                    row={row6}
+                    answer={DUMMY_ANSWER}
+                    isEntered={isEntered[5]}
+                />
             </div>
         </React.Fragment>
     );
