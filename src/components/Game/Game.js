@@ -5,6 +5,7 @@ import Context from "../../store/context";
 import classes from "./Game.module.css";
 import Modal from "../UI/Modal";
 import Row from "./Row";
+import ModalContent from "./ModalContent";
 
 const Game = () => {
     const ctx = useContext(Context);
@@ -108,31 +109,11 @@ const Game = () => {
         <React.Fragment>
             {showModal && (
                 <Modal onClose={closeModalHandler}>
-                    <h1>{isWin ? "Congrulations!!!!" : "Try Again :("}</h1>
-                    <p className={classes.ModalParagraph}>
-                        {!isWin &&
-                            "The answer is " + ctx.WORDLE_ANSWER.toUpperCase()}
-                        {isWin && (
-                            <span>
-                                You found the answer in
-                                <strong> {rowCount}</strong> guess.
-                            </span>
-                        )}
-                    </p>
-                    <h3 className={classes.ModalTitle}>Your guesses</h3>
-                    <ul className={classes.List}>
-                        {ctx.rows.map((row, index) => (
-                            <li key={index}>{row.join("").toUpperCase()}</li>
-                        ))}
-                    </ul>
-                    <div className={classes.Actions}>
-                        <button
-                            className={classes.Button}
-                            onClick={closeModalHandler}
-                        >
-                            Close
-                        </button>
-                    </div>
+                    <ModalContent
+                        isWin
+                        rowCount
+                        closeModal={closeModalHandler}
+                    />
                 </Modal>
             )}
             <div className={classes.Game}>
