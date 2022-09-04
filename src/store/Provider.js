@@ -1,9 +1,8 @@
+import { useState } from "react";
 import Context from "./context";
 
 const Provider = (props) => {
-    const value = {
-        func: () => {},
-    };
+    const value = {};
 
     return <Context.Provider value={value}>{props.children}</Context.Provider>;
 };
