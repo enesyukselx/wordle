@@ -11,8 +11,6 @@ const Game = () => {
     const ctx = useContext(Context);
 
     const [showModal, setShowModal] = useState(false);
-    const [finished, setFinished] = useState(false);
-    const [isWin, setIsWin] = useState(false);
 
     const availableLetters = [
         "e",
@@ -46,59 +44,20 @@ const Game = () => {
         "ç",
     ];
 
-    const [isEntered, setIsEntered] = useState([
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-    ]);
-    const [tileCount, setTileCount] = useState(0);
-    const [rowCount, setRowCount] = useState(0);
-
     useKeypress("Enter", () => {
-        if (tileCount === 5 && rowCount !== 6 && !finished) {
-            setRowCount(rowCount + 1);
-            setIsEntered((prevState) => {
-                const updatedArr = [...prevState];
-                updatedArr[rowCount] = true;
-                return updatedArr;
-            });
-            setTileCount(0);
-            if (rowCount === 5) {
-                setTileCount(5);
-                setTimeout(() => {
-                    setShowModal(true);
-                }, 500);
-                setFinished(true);
-            }
-
-            if (ctx.rows[rowCount].join("") === ctx.WORDLE_ANSWER) {
-                setTimeout(() => {
-                    setShowModal(true);
-                }, 500);
-                setFinished(true);
-                setIsWin(true);
-            }
-        }
+        ctx.enterFunc(() => {
+            setTimeout(() => {
+                setShowModal(true);
+            }, 500);
+        });
     });
 
     useKeypress("Backspace", (e) => {
-        if (tileCount !== 0 && !finished && rowCount !== 6) {
-            setTileCount((prevState) => prevState - 1);
-            ctx.setRow(rowCount, tileCount, e.key, true);
-        }
+        ctx.backspaceFunc(e.key);
     });
 
     useKeypress(availableLetters, (e) => {
-        if (tileCount === 5) {
-            return;
-        }
-        if (!finished) {
-            ctx.setRow(rowCount, tileCount, e.key);
-            setTileCount((prevTileCount) => prevTileCount + 1);
-        }
+        ctx.keyFunc(e.key);
     });
 
     const closeModalHandler = () => {
@@ -110,8 +69,8 @@ const Game = () => {
             {showModal && (
                 <Modal onClose={closeModalHandler}>
                     <ModalContent
-                        isWin
-                        rowCount
+                        isWin={ctx.isWin}
+                        rowCount={ctx.rowCount}
                         closeModal={closeModalHandler}
                     />
                 </Modal>
@@ -122,7 +81,7 @@ const Game = () => {
                         key={index}
                         row={row}
                         index={index}
-                        isEntered={isEntered[index]}
+                        isEntered={ctx.isEntered[index]}
                     />
                 ))}
             </div>

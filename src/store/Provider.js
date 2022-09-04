@@ -14,6 +14,19 @@ const Provider = (props) => {
     const rows = [row1, row2, row3, row4, row5, row6];
     const setRows = [setRow1, setRow2, setRow3, setRow4, setRow5, setRow6];
 
+    const [rowCount, setRowCount] = useState(0);
+    const [tileCount, setTileCount] = useState(0);
+    const [finished, setFinished] = useState(false);
+    const [isEntered, setIsEntered] = useState([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+    ]);
+    const [isWin, setIsWin] = useState(false);
+
     const setRow = (row, tile, key, del = false) => {
         if (del) {
             setRows[row]((prevState) => {
@@ -30,10 +43,55 @@ const Provider = (props) => {
         }
     };
 
+    const enterFunc = (modalFunc) => {
+        if (tileCount === 5 && rowCount !== 6 && !finished) {
+            setRowCount(rowCount + 1);
+            setIsEntered((prevState) => {
+                const updatedArr = [...prevState];
+                updatedArr[rowCount] = true;
+                return updatedArr;
+            });
+            setTileCount(0);
+            if (rowCount === 5) {
+                setTileCount(5);
+                modalFunc();
+                setFinished(true);
+            }
+
+            if (rows[rowCount].join("") === WORDLE_ANSWER) {
+                setFinished(true);
+                modalFunc();
+                setIsWin(true);
+            }
+        }
+    };
+
+    const backspaceFunc = (e) => {
+        if (tileCount !== 0 && !finished && rowCount !== 6) {
+            setTileCount((prevState) => prevState - 1);
+            setRow(rowCount, tileCount, e, true);
+        }
+    };
+
+    const keyFunc = (e) => {
+        if (tileCount === 5) {
+            return;
+        }
+        if (!finished) {
+            setRow(rowCount, tileCount, e);
+            setTileCount((prevTileCount) => prevTileCount + 1);
+        }
+    };
+
     const value = {
         WORDLE_ANSWER,
         rows,
-        setRow,
+        rowCount,
+        isEntered,
+        isWin,
+        keyFunc,
+        enterFunc,
+        backspaceFunc,
     };
 
     return <Context.Provider value={value}>{props.children}</Context.Provider>;
