@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
+import Context from "../../store/context";
 import classes from "./Keyboard.module.css";
 import Key from "./Key";
 
 const Keyboard = () => {
-    const row1 = ["E", "R", "T", "Y", "U", "I", "O", "P", "Ğ", "Ü"];
-    const row2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L", "Ş", "İ"];
-    const row3 = ["Z", "C", "V", "B", "N", "M", "Ö", "Ç"];
+    const ctx = useContext(Context);
+
+    const row1 = ["e", "r", "t", "y", "u", "ı", "o", "p", "ğ", "ü"];
+    const row2 = ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ş", "i"];
+    const row3 = ["z", "c", "v", "b", "n", "m", "ö", "ç"];
 
     const row1Obj = row1.map((letter, index) => {
         return {
@@ -47,11 +50,19 @@ const Keyboard = () => {
         if (letter === "Delete") {
             deleteHandler();
         }
+
+        if (letter !== "Enter" && letter !== "Delete") {
+            ctx.keyFunc(letter);
+        }
     };
 
-    const enterHandler = () => {};
+    const enterHandler = () => {
+        ctx.enterFunc();
+    };
 
-    const deleteHandler = () => {};
+    const deleteHandler = () => {
+        ctx.backspaceFunc("Backspace");
+    };
 
     return (
         <div className={classes.Keyboard}>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Context from "./context";
 
 const Provider = (props) => {
-    const WORDLE_ANSWER = "bahçe";
+    const WORDLE_ANSWER = "table";
 
     const [row1, setRow1] = useState(["", "", "", "", ""]);
     const [row2, setRow2] = useState(["", "", "", "", ""]);
@@ -14,6 +14,7 @@ const Provider = (props) => {
     const rows = [row1, row2, row3, row4, row5, row6];
     const setRows = [setRow1, setRow2, setRow3, setRow4, setRow5, setRow6];
 
+    const [showModal, setShowModal] = useState(false);
     const [rowCount, setRowCount] = useState(0);
     const [tileCount, setTileCount] = useState(0);
     const [finished, setFinished] = useState(false);
@@ -43,7 +44,7 @@ const Provider = (props) => {
         }
     };
 
-    const enterFunc = (modalFunc) => {
+    const enterFunc = () => {
         if (tileCount === 5 && rowCount !== 6 && !finished) {
             setRowCount(rowCount + 1);
             setIsEntered((prevState) => {
@@ -54,13 +55,17 @@ const Provider = (props) => {
             setTileCount(0);
             if (rowCount === 5) {
                 setTileCount(5);
-                modalFunc();
+                setTimeout(() => {
+                    setShowModal(true);
+                }, 500);
                 setFinished(true);
             }
 
             if (rows[rowCount].join("") === WORDLE_ANSWER) {
                 setFinished(true);
-                modalFunc();
+                setTimeout(() => {
+                    setShowModal(true);
+                }, 500);
                 setIsWin(true);
             }
         }
@@ -89,6 +94,8 @@ const Provider = (props) => {
         rowCount,
         isEntered,
         isWin,
+        showModal,
+        setShowModal,
         keyFunc,
         enterFunc,
         backspaceFunc,

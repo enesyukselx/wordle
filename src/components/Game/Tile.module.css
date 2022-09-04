@@ -12,7 +12,6 @@
     vertical-align: middle;
     box-sizing: border-box;
     color: var(--tile-text-color);
-    text-transform: uppercase;
 }
 
 .Tile.Wrong {

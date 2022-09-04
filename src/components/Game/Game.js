@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import useKeypress from "react-use-keypress";
 import Context from "../../store/context";
 
@@ -9,8 +9,6 @@ import ModalContent from "./ModalContent";
 
 const Game = () => {
     const ctx = useContext(Context);
-
-    const [showModal, setShowModal] = useState(false);
 
     const availableLetters = [
         "e",
@@ -45,11 +43,7 @@ const Game = () => {
     ];
 
     useKeypress("Enter", () => {
-        ctx.enterFunc(() => {
-            setTimeout(() => {
-                setShowModal(true);
-            }, 500);
-        });
+        ctx.enterFunc();
     });
 
     useKeypress("Backspace", (e) => {
@@ -61,12 +55,12 @@ const Game = () => {
     });
 
     const closeModalHandler = () => {
-        setShowModal(false);
+        ctx.setShowModal(false);
     };
 
     return (
         <React.Fragment>
-            {showModal && (
+            {ctx.showModal && (
                 <Modal onClose={closeModalHandler}>
                     <ModalContent
                         isWin={ctx.isWin}

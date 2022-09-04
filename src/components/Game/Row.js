@@ -10,7 +10,7 @@ const Row = (props) => {
     const wrong = (index, row) => {
         const answerLetter = ctx.WORDLE_ANSWER[index];
         const rowLetter = row[index];
-        if (answerLetter.toUpperCase() !== rowLetter.toUpperCase()) {
+        if (answerLetter !== rowLetter) {
             return true;
         }
     };
@@ -18,7 +18,7 @@ const Row = (props) => {
     const correct = (index, row) => {
         const answerLetter = ctx.WORDLE_ANSWER[index];
         const rowLetter = row[index];
-        if (answerLetter.toUpperCase() === rowLetter.toUpperCase()) {
+        if (answerLetter === rowLetter) {
             return true;
         }
     };
@@ -31,7 +31,7 @@ const Row = (props) => {
         }
 
         for (let letter of ctx.WORDLE_ANSWER) {
-            if (letter.toUpperCase() === row[index].toUpperCase()) {
+            if (letter === row[index]) {
                 present = true;
                 return present;
             }
