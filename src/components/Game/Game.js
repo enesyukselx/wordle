@@ -12,6 +12,7 @@ const Game = () => {
 
     useEffect(() => {
         console.log(ctx.randomWord());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const availableLetters = [
