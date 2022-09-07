@@ -39,7 +39,14 @@ const Row = (props) => {
                     });
                 }
 
-                if (ctx.rows[ctx.rowCount - 1].includes(letter)) {
+                if (
+                    ctx.rows[ctx.rowCount - 1].includes(
+                        letter.toString().toUpperCase()
+                    ) ||
+                    ctx.rows[ctx.rowCount - 1].includes(
+                        letter.toString().toLowerCase()
+                    )
+                ) {
                     setPresentLetters((prevState) => {
                         const updatedArr = [...prevState];
                         updatedArr.push(letter);
@@ -52,6 +59,7 @@ const Row = (props) => {
 
     useEffect(() => {
         checkKeyStatus();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ctx.isEntered]);
 
     return (
