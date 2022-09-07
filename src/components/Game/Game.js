@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import useKeypress from "react-use-keypress";
 import Context from "../../store/context";
 
@@ -9,6 +9,10 @@ import ModalContent from "./ModalContent";
 
 const Game = () => {
     const ctx = useContext(Context);
+
+    useEffect(() => {
+        console.log(ctx.randomWord());
+    }, []);
 
     const availableLetters = [
         "q",

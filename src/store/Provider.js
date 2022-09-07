@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { WORDS } from "../constants/word-list";
+
 import Context from "./context";
 
 const Provider = (props) => {
-    const WORDLE_ANSWER = "table";
+    const [WORDLE_ANSWER, setAnswer] = useState("wordle");
 
     const [row1, setRow1] = useState(["", "", "", "", ""]);
     const [row2, setRow2] = useState(["", "", "", "", ""]);
@@ -27,6 +29,14 @@ const Provider = (props) => {
         false,
     ]);
     const [isWin, setIsWin] = useState(false);
+
+    const randomWord = () => {
+        const wordListLength = WORDS.length;
+        const randomIndex = Math.floor(Math.random() * wordListLength);
+        const randomWord = WORDS[randomIndex];
+        setAnswer(randomWord);
+        return randomWord;
+    };
 
     const setRow = (row, tile, key, del = false) => {
         if (del) {
@@ -102,6 +112,7 @@ const Provider = (props) => {
         keyFunc,
         enterFunc,
         backspaceFunc,
+        randomWord,
     };
 
     return <Context.Provider value={value}>{props.children}</Context.Provider>;
