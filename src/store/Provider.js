@@ -61,7 +61,10 @@ const Provider = (props) => {
                 setFinished(true);
             }
 
-            if (rows[rowCount].join("") === WORDLE_ANSWER) {
+            if (
+                rows[rowCount].join("") === WORDLE_ANSWER ||
+                rows[rowCount].join("") === WORDLE_ANSWER.toUpperCase()
+            ) {
                 setFinished(true);
                 setTimeout(() => {
                     setShowModal(true);

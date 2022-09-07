@@ -8,16 +8,16 @@ const Row = (props) => {
     const ctx = useContext(Context);
 
     const wrong = (index, row) => {
-        const answerLetter = ctx.WORDLE_ANSWER[index];
-        const rowLetter = row[index];
+        const answerLetter = ctx.WORDLE_ANSWER[index].toString().toUpperCase();
+        const rowLetter = row[index].toUpperCase();
         if (answerLetter !== rowLetter) {
             return true;
         }
     };
 
     const correct = (index, row) => {
-        const answerLetter = ctx.WORDLE_ANSWER[index];
-        const rowLetter = row[index];
+        const answerLetter = ctx.WORDLE_ANSWER[index].toString().toUpperCase();
+        const rowLetter = row[index].toUpperCase();
         if (answerLetter === rowLetter) {
             return true;
         }
@@ -30,8 +30,8 @@ const Row = (props) => {
             return present;
         }
 
-        for (let letter of ctx.WORDLE_ANSWER) {
-            if (letter === row[index]) {
+        for (let letter of ctx.WORDLE_ANSWER.toString().toUpperCase()) {
+            if (letter === row[index].toUpperCase()) {
                 present = true;
                 return present;
             }
