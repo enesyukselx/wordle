@@ -7,9 +7,9 @@ import Key from "./Key";
 const Keyboard = () => {
     const ctx = useContext(Context);
 
-    const row1 = ["e", "r", "t", "y", "u", "ı", "o", "p", "ğ", "ü"];
-    const row2 = ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ş", "i"];
-    const row3 = ["z", "c", "v", "b", "n", "m", "ö", "ç"];
+    const row1 = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"];
+    const row2 = ["a", "s", "d", "f", "g", "h", "j", "k", "l"];
+    const row3 = ["z", "x", "c", "v", "b", "n", "m"];
 
     const row1Obj = row1.map((letter, index) => {
         return {

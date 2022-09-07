@@ -11,16 +11,16 @@ const Game = () => {
     const ctx = useContext(Context);
 
     const availableLetters = [
+        "q",
+        "w",
         "e",
         "r",
         "t",
         "y",
         "u",
-        "ı",
+        "i",
         "o",
         "p",
-        "ğ",
-        "ü",
         "a",
         "s",
         "d",
@@ -30,17 +30,20 @@ const Game = () => {
         "j",
         "k",
         "l",
-        "ş",
-        "i",
         "z",
+        "x",
         "c",
         "v",
         "b",
         "n",
         "m",
-        "ö",
-        "ç",
     ];
+
+    const upperCase = availableLetters.map((letter) => {
+        return letter.toUpperCase();
+    });
+
+    const availables = [...availableLetters, ...upperCase];
 
     useKeypress("Enter", () => {
         ctx.enterFunc();
@@ -50,7 +53,7 @@ const Game = () => {
         ctx.backspaceFunc(e.key);
     });
 
-    useKeypress(availableLetters, (e) => {
+    useKeypress(availables, (e) => {
         ctx.keyFunc(e.key);
     });
 
